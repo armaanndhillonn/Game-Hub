@@ -91,6 +91,11 @@ int main() {
     }
 
     cout << "Game Over. Your final score is: " << score << "/" << totalQuestions << endl;
-
+    if (score != totalQuestions) {
+        cout << "You did not get all the answers correct. Try again!" << endl;
+    } else {
+        cout << "Congratulations! You got all the answers correct!" << endl;
+    }
+    
     return 0;
 }
