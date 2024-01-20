@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <limits>
 
 using namespace std;
 
@@ -16,11 +17,12 @@ void shuffleArray(string arr[], int size) {
 }
 
 string displayGameAndGetInput(string words[], string colors[], int size) {
-    int index = rand() % size;
+    int index = rand() % size; 
 
     cout << "Word to be matched: ";
 
-    // Choose the color associated with the word
+    // set the color associated with the word
+  
     if (colors[index] == "Red") {
         cout << RED_TEXT << words[index];
     } else if (colors[index] == "Blue") {
@@ -31,7 +33,7 @@ string displayGameAndGetInput(string words[], string colors[], int size) {
 
     cout << RESET_TEXT << endl;
 
-    // Display shuffled words with randomized colors
+    // shuffle words with randomized colors
     shuffleArray(words, size);
     for (int i = 0; i < size; ++i) {
         if (colors[i] == "Red") {
@@ -50,12 +52,26 @@ string displayGameAndGetInput(string words[], string colors[], int size) {
     string userAnswer;
     cin >> userAnswer;
 
-    return tolower(userAnswer[0]) == tolower(words[index][0]) ? "Correct" : "Incorrect";
+  // checks if word matches with chosen word
+  string result = tolower(userAnswer[0]) == tolower(words[index][0]) ? "Correct" : "Incorrect";
+
+  // wait for user to press enter before clearing the screen
+  cout << "\nPress Enter to continue...";
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  cin.get();
+  cout << "\x1B[2J\x1B[H";  // ANSI escape sequence to clear the screen
+
+  return result;
+  
 }
 
+  
+
 int main() {
+  // gets random int using current time for shufflearray
     srand(static_cast<unsigned int>(time(0)));
-    cout << "Welcome to the Color Game! To play, match the color of the word provided with one of the 3 words. Type in which word matches." << endl;
+  
+    cout << "Welcome to the " << RED_TEXT << "Color" << RESET_TEXT << " " << BLUE_TEXT << "Match" << RESET_TEXT << " " << YELLOW_TEXT << "Game" << RESET_TEXT << "!"" To play, match the color of the word provided with one of the 3 words. Type in which word matches." << endl;
     const int size = 3;
     string words[size] = {"Red", "Blue", "Yellow"};
     string colors[size] = {"Red", "Blue", "Yellow"};
